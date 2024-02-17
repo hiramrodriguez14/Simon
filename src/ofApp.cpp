@@ -4,16 +4,16 @@
 void ofApp::setup(){
 
 	//Let's create our buttons
-	RedButton = new Button(ofGetWindowWidth()/2-20,ofGetWindowHeight()/2-260,302,239,"images/BlueButton.png","sounds/YellowButton.mp3");
-	BlueButton = new Button(ofGetWindowWidth()/2+35,ofGetWindowHeight()/2-10,236,290,"images/Rebutton.mp4","sounds/YellowButton.mp3");
-	YellowButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2+40,287,239,"images/RedButton.png","sounds/YellowButton.mp3");
-	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/RedButton.png","sounds/YellowButton.mp3");
+	RedButton = new Button(ofGetWindowWidth()/2-20,ofGetWindowHeight()/2-260,302,239,"images/RedButton.png","sounds/RedButton.mp3");
+	BlueButton = new Button(ofGetWindowWidth()/2+35,ofGetWindowHeight()/2-10,236,290,"images/BlueButton.png","sounds/BlueButton.mp3");
+	YellowButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2+40,287,239,"images/YellowButton.png","sounds/YellowButton.mp3");
+	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
 
 	//Load the glowing images for the buttons
-	redLight.load("images/BlueLight.png");
-    blueLight.load("images/GreenLight.png");
+	redLight.load("images/RedLight.png");
+    blueLight.load("images/BlueLight.png");
     yellowLight.load("images/YellowLight.png");
-    greenLight.load("images/RedLight.png");
+    greenLight.load("images/GreenLight.png");
 
 	//Load other images
 	logo.load("images/Logo.png");
@@ -156,16 +156,19 @@ void ofApp::GameReset(){
 void ofApp::generateSequence(){
 
 	//This function will generate a random number between 0 and 3
-	int random = ofRandom(4);
+	int random = ofRandom(5);
 	
 	//Depending on the random number, we will add a button to the sequence
 	if(random == 0){
 		Sequence.push_back(RED);
 	}
 	else if(random == 1){
-		Sequence.push_back(RED);
+		Sequence.push_back(BLUE);
 	}
-	else if(random = 4){
+	else if(random == 2){
+		Sequence.push_back(GREEN);
+	}
+	else if(random == 3){
 		Sequence.push_back(YELLOW);
 	}
 
@@ -189,9 +192,11 @@ void ofApp::lightOn(Buttons color){
 	//true for the button that matches the color, and also play the button sound
 	if(color == RED){
 		RedButton->toggleLightOn();
+		 RedButton->playSound();
 	}
 	else if(color == BLUE){
 		BlueButton->toggleLightOn();
+		 BlueButton->playSound();
 	}
 	else if(color == YELLOW){
 		YellowButton->toggleLightOn();
@@ -199,6 +204,7 @@ void ofApp::lightOn(Buttons color){
 	}
 	else if(color == GREEN){
 		GreenButton->toggleLightOn();
+		 GreenButton->playSound();
 	}
 }
 
