@@ -38,12 +38,14 @@ void ofApp::update(){
 
 	//We will tick the buttons, aka constantly update them
 	//while expecting input from the user to see if anything changed
+	if(gameState == StartUp){
+		CompButton->tick();
+	}
 	if(gameState == PlayerInput){
 		RedButton->tick();
 		BlueButton->tick();
 		YellowButton->tick();
 		GreenButton->tick();
-		CompButton->tick();
 
 		//If the amount of user input equals the sequence limit
 		//that means the user has successfully completed the whole
@@ -80,7 +82,9 @@ void ofApp::draw(){
 	BlueButton->render();
 	YellowButton->render();
 	GreenButton->render();
-	CompButton->render();
+	if(gameState == StartUp){
+		CompButton->render();
+	}
 
 	
 	//This whole if statement will take care of showing
@@ -259,6 +263,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 	//If we're not in Idle and the gameState equals PlayerInput,
 	//We will pay attention to the mousePresses from the user
+	if(!idle && gameState == StartUp){
+		CompButton->setPressed(x,y);
+		if(CompButton->wasPressed()){
+			GameState = PlayerInput;
+		}
+	}
 	if(!idle && gameState == PlayerInput){
 		//We mark the pressed button as "pressed"
 		RedButton->setPressed(x,y);
