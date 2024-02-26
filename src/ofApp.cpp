@@ -82,7 +82,7 @@ void ofApp::draw(){
 	BlueButton->render();
 	YellowButton->render();
 	GreenButton->render();
-	if(gameState == StartUp){
+	if(!idle && gameState == StartUp){
 		CompButton->render();
 	}
 
