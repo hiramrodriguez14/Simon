@@ -8,7 +8,7 @@ void ofApp::setup(){
 	BlueButton = new Button(ofGetWindowWidth()/2+35,ofGetWindowHeight()/2-10,236,290,"images/BlueButton.png","sounds/BlueButton.mp3");
 	YellowButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2+40,287,239,"images/YellowButton.png","sounds/YellowButton.mp3");
 	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
-
+	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/GreenButton.mp3");
 	//Load the glowing images for the buttons
 	redLight.load("images/RedLight.png");
     blueLight.load("images/BlueLight.png");
@@ -21,6 +21,8 @@ void ofApp::setup(){
 	startUpScreen.load("images/StartScreen.png");
 	gameOverScreen.load("images/GameOverScreen.png");
 
+	//Load Red and Green Dots for phase two!!
+	
     //Load Music
 	backgroundMusic.load("sounds/BackgroundMusic.mp3");
 	backgroundMusic.setLoop(true);
@@ -39,6 +41,7 @@ void ofApp::update(){
 		BlueButton->tick();
 		YellowButton->tick();
 		GreenButton->tick();
+		CompButton->tick();
 
 		//If the amount of user input equals the sequence limit
 		//that means the user has successfully completed the whole
@@ -75,6 +78,7 @@ void ofApp::draw(){
 	BlueButton->render();
 	YellowButton->render();
 	GreenButton->render();
+	CompButton->render();
 
 	
 	//This whole if statement will take care of showing

@@ -7,7 +7,9 @@ enum Buttons {
     GREEN,
     RED,
     YELLOW,
-    BLUE
+    BLUE,
+   // MULTI,
+    COMP
 };
 class Button {
 public:

@@ -11,6 +11,7 @@ class ofApp : public ofBaseApp{
 		PlayingSequence,
 		PlayerInput,
 		GameOver
+
 	};
 
 	public:
@@ -48,6 +49,7 @@ class ofApp : public ofBaseApp{
 		Button *BlueButton;
 		Button *YellowButton;
 		Button *GreenButton;
+		Button *CompButton;
 
 		//These will be mere images which we will draw on top
 		//of the actual buttons to give the mere illusion
