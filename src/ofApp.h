@@ -62,7 +62,9 @@ class ofApp : public ofBaseApp{
 		ofImage logoLight;
 		ofImage startUpScreen;
 		ofImage gameOverScreen;
-
+		ofImage redDot;
+		ofImage greenDot;
+		
 		//Few variables we'll need
         ofSoundPlayer backgroundMusic;
 		int sequenceLimit = 1;

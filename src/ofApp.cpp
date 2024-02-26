@@ -8,7 +8,7 @@ void ofApp::setup(){
 	BlueButton = new Button(ofGetWindowWidth()/2+35,ofGetWindowHeight()/2-10,236,290,"images/BlueButton.png","sounds/BlueButton.mp3");
 	YellowButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2+40,287,239,"images/YellowButton.png","sounds/YellowButton.mp3");
 	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
-	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/GreenButton.mp3");
+	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/CompButton.wav");
 	//Load the glowing images for the buttons
 	redLight.load("images/RedLight.png");
     blueLight.load("images/BlueLight.png");
@@ -22,6 +22,8 @@ void ofApp::setup(){
 	gameOverScreen.load("images/GameOverScreen.png");
 
 	//Load Red and Green Dots for phase two!!
+	redDot.load("images/RedDot.png");
+	greenDot.load("images/GreenDot.png");
 	
     //Load Music
 	backgroundMusic.load("sounds/BackgroundMusic.mp3");
