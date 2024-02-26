@@ -266,7 +266,7 @@ void ofApp::mousePressed(int x, int y, int button){
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
 		if(CompButton->wasPressed()){
-			GameState = PlayerInput;
+			gameState = PlayerInput;
 		}
 	}
 	if(!idle && gameState == PlayerInput){
