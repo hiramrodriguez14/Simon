@@ -9,6 +9,8 @@ void ofApp::setup(){
 	YellowButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2+40,287,239,"images/YellowButton.png","sounds/YellowButton.mp3");
 	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
 	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/CompButton.mp3");
+	ResetButton = new Button(ofGetWindowWidth()/2-300,ofGetWindowHeight()/2+250,100,100,"images/resetButton.png","sound/ResetButton.mp3");
+
 	//Load the glowing images for the buttons
 	redLight.load("images/RedLight.png");
     blueLight.load("images/BlueLight.png");
@@ -38,6 +40,10 @@ void ofApp::update(){
 
 	//We will tick the buttons, aka constantly update them
 	//while expecting input from the user to see if anything changed
+	if (!idle){
+		ResetButton->tick();
+	}
+
 	if(gameState == StartUp){
 		CompButton->tick();
 	}
@@ -88,6 +94,7 @@ void ofApp::draw(){
 	BlueButton->render();
 	YellowButton->render();
 	GreenButton->render();
+	ResetButton->render();
 	if(!idle && gameState == StartUp){
 		CompButton->render();
 		//CompButton->playSound();
@@ -249,7 +256,7 @@ void ofApp::keyPressed(int key){
 	if((!idle || gameState == GameOver) && tolower(key) == ' '){
 		GameReset();
 	}
-	if((!idle) && tolower(key) == 'r'){
+	if((!idle) && tolower(key) == 'e'){
 		gameState = StartUp;
 	}
 }
@@ -273,6 +280,12 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 	//If we're not in Idle and the gameState equals PlayerInput,
 	//We will pay attention to the mousePresses from the user
+	if(!idle){
+		ResetButton->setPressed(x,y);
+		if(ResetButton->wasPressed()){
+			gameState = StartUp;
+		}
+	}
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
 		if(CompButton->wasPressed()){

@@ -51,6 +51,7 @@ class ofApp : public ofBaseApp{
 		Button *YellowButton;
 		Button *GreenButton;
 		Button *CompButton;
+		Button *ResetButton;
 
 		//These will be mere images which we will draw on top
 		//of the actual buttons to give the mere illusion

@@ -9,7 +9,8 @@ enum Buttons {
     YELLOW,
     BLUE,
    // MULTI,
-    COMP
+    COMP,
+    RESET
 };
 class Button {
 public:
