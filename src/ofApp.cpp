@@ -9,7 +9,7 @@ void ofApp::setup(){
 	YellowButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2+40,287,239,"images/YellowButton.png","sounds/YellowButton.mp3");
 	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
 	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/CompButton.mp3");
-	ResetButton = new Button(ofGetWindowWidth()/2-300,ofGetWindowHeight()/2+250,100,100,"images/resetButton.png","sound/ResetButton.mp3");
+	ResetButton = new Button(ofGetWindowWidth()/2-300,ofGetWindowHeight()/2+250,100,100,"images/resetButton.png","sounds/ResetButton.mp3");
 
 	//Load the glowing images for the buttons
 	redLight.load("images/RedLight.png");
