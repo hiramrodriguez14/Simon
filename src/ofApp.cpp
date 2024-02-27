@@ -272,10 +272,6 @@ void ofApp::mousePressed(int x, int y, int button){
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
 		if(CompButton->wasPressed()){
-			lightOff(BLUE);
-			lightOff(RED);
-			lightOff(GREEN);
-			lightOff(YELLOW);
 			gameState = FreeMode;
 	}
 	if(!idle && gameState == FreeMode){
