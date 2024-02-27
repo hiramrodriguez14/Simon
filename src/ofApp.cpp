@@ -40,9 +40,9 @@ void ofApp::update(){
 
 	//We will tick the buttons, aka constantly update them
 	//while expecting input from the user to see if anything changed
-	if (!idle || gameState == FreeMode){
-		ResetButton->tick();
-	}
+	//if (!idle || gameState == FreeMode){
+	//	ResetButton->tick();
+	//}
 
 	if(gameState == StartUp){
 		CompButton->tick();
@@ -94,7 +94,7 @@ void ofApp::draw(){
 	BlueButton->render();
 	YellowButton->render();
 	GreenButton->render();
-	ResetButton->render();
+	//ResetButton->render();
 	if(!idle && gameState == StartUp){
 		CompButton->render();
 		//CompButton->playSound();
@@ -280,11 +280,11 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 	//If we're not in Idle and the gameState equals PlayerInput,
 	//We will pay attention to the mousePresses from the user
-	if(!idle || gameState == FreeMode){
-		ResetButton->setPressed(x,y);
-		if(ResetButton->wasPressed()){
-			gameState = StartUp;
-		}
+	//if(!idle || gameState == FreeMode){
+		//ResetButton->setPressed(x,y);
+		//if(ResetButton->wasPressed()){
+			//gameState = StartUp;
+		//}
 	
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
