@@ -90,6 +90,7 @@ void ofApp::draw(){
 	GreenButton->render();
 	if(!idle && gameState == StartUp){
 		CompButton->render();
+		CompButton->playSound();
 	}
 
 	
