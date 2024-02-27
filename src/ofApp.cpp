@@ -249,6 +249,9 @@ void ofApp::keyPressed(int key){
 	if((!idle || gameState == GameOver) && tolower(key) == ' '){
 		GameReset();
 	}
+	if((!idle) && tolower(key) == 'r'){
+		gameState = StartUp;
+	}
 }
 
 //--------------------------------------------------------------
