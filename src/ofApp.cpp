@@ -349,7 +349,6 @@ void ofApp::mousePressed(int x, int y, int button){
 				gameState = GameOver;
 			}
 	}
-}
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
