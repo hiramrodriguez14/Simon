@@ -41,6 +41,12 @@ void ofApp::update(){
 	if(gameState == StartUp){
 		CompButton->tick();
 	}
+	if(gameState == FreeMode){
+		RedButton->tick();
+		BlueButton->tick();
+		GreenButton->tick();
+		YellowButton->tick();
+	}
 	if(gameState == PlayerInput){
 		RedButton->tick();
 		BlueButton->tick();
@@ -266,8 +272,34 @@ void ofApp::mousePressed(int x, int y, int button){
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
 		if(CompButton->wasPressed()){
-			gameState = PlayerInput;
+			lightOff(BLUE);
+			lightOff(RED);
+			lightOff(GREEN);
+			lightOff(YELLOW);
+			gameState = FreeMode;
+	}
+	if(!idle && gameState == FreeMode){
+		RedButton->setPressed(x,y);
+		BlueButton->setPressed(x,y);
+		GreenButton->setPressed(x,y);
+		YellowButton->setPressed(x,y);
+		if(RedButton->wasPressed()){
+			color = RED;
 		}
+		else if(BlueButton->wasPressed()){
+			color = BLUE;
+		}
+		else if(YellowButton->wasPressed()){
+			color = YELLOW;
+		}
+		else if(GreenButton->wasPressed()){
+			color = GREEN;
+		}
+		//Light up the pressed button for a few ticks
+		lightOn(color);
+		lightDisplayDuration = 15;
+
+
 	}
 	if(!idle && gameState == PlayerInput){
 		//We mark the pressed button as "pressed"
