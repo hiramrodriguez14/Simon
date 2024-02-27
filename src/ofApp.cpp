@@ -272,7 +272,9 @@ void ofApp::mousePressed(int x, int y, int button){
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
 		if(CompButton->wasPressed()){
+			idle = false;
 			gameState = FreeMode;
+
 	}
 	if(!idle && gameState == FreeMode){
 		RedButton->setPressed(x,y);
@@ -331,7 +333,7 @@ void ofApp::mousePressed(int x, int y, int button){
 			}
 	}
 }
-
+}
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
 
