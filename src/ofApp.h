@@ -88,6 +88,9 @@ class ofApp : public ofBaseApp{
 		int logoCounter = 0;
 		bool idle = true;
 		bool isRecording = false;
+		bool NormalPlay = false;
+		bool FreePlay = false;
+
 
 		//font
 		ofTrueTypeFont font;

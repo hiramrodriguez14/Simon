@@ -204,19 +204,11 @@ void ofApp::draw(){
 void ofApp::replaySequence() {
     for (int i = 0; i < recordedSequence.size(); i++) {
         lightOn(recordedSequence[i]); // Simulate button press
+		ofSleepMillis(1000);
     }
     
     // Set the display duration after all button presses are simulated
     lightDisplayDuration = 30;
-}
-//--------------------------------------------------------------
-void ofApp::FreeModeReset(){  //<- Makes that in free mode lights are off
-if(gameState==FreeMode){
-	lightOff(RED);
-	lightOff(BLUE);
-	lightOff(YELLOW);
-	lightOff(GREEN);
-}
 }
 //--------------------------------------------------------------
 void ofApp::GameReset(){
@@ -226,10 +218,20 @@ void ofApp::GameReset(){
 	lightOff(YELLOW);
 	lightOff(GREEN);
 	Sequence.clear();
-	generateSequence();
-	userIndex = 0;
-	gameState = PlayingSequence;
-	showingSequenceDuration = 0;
+	if(NormalPlay){
+		generateSequence();
+		userIndex = 0;
+		gameState = PlayingSequence;
+		showingSequenceDuration = 0;
+	}
+
+	if (FreePlay){
+		userIndex = 0;
+		gameState = FreeMode;
+		showingSequenceDuration = 0;
+
+
+	}
 }
 
 //--------------------------------------------------------------
@@ -310,6 +312,7 @@ void ofApp::keyPressed(int key){
 	//As long as we're not in Idle OR the gameState is GameOver;
 	//AND we press the SPACEBAR, we will reset the game
 	if((!idle || gameState == GameOver||gameState == FreeMode) && tolower(key) == ' '){
+		NormalPlay = true;
 		GameReset();
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
@@ -348,11 +351,12 @@ void ofApp::mousePressed(int x, int y, int button){
 		CompButton->setPressed(x,y);
 		MultiplayerButton->setPressed(x,y);
 	}
-		if(!idle && gameState== StartUp && CompButton->wasPressed()){
+		if(gameState== StartUp && CompButton->wasPressed()){
 			CompButton->playSound();
-			gameState = FreeMode;
-			// FreeModeReset();
-			}
+			FreePlay = true;
+			GameReset();
+
+		}
 
 		if(MultiplayerButton->wasPressed()){
 			gameState = PlayerOneTurn;
