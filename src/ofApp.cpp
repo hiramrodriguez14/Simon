@@ -92,7 +92,10 @@ void ofApp::update(){
 			lightOff(GREEN);
 		}
 	}
-	
+
+	if(gameState==ReplayMode){
+		replaySequence();
+	}
 }
 
 //--------------------------------------------------------------
@@ -202,34 +205,56 @@ void ofApp::draw(){
 	
 //--------------------------------------------------------------
 void ofApp::replaySequence() {
-    for (int i = 0; i < recordedSequence.size(); i++) {
-        lightOn(recordedSequence[i]); // Simulate button press
+  
+
+    // Check if it's time to replay the next button press
+    int currentTime = ofGetElapsedTimeMillis();
+    if (replayIndex < recordedSequence.size() && currentTime - lastReplayTime >= 1000) {
+        // Replay the next button press
+        color = recordedSequence[replayIndex];
+        lightOn(color);
+		lightDisplayDuration = 15;
+        // Update variables for the next replay
+        replayIndex++;
+        lastReplayTime = currentTime;
     }
-    
-    // Set the display duration after all button presses are simulated
-    lightDisplayDuration = 30;
+
+    // Check if all button presses have been replayed
+    if (replayIndex >= recordedSequence.size()) {
+        // Reset variables and set display duration
+        replayIndex = 0;
+        recordedSequence.clear();
+		gameState=FreeMode;
+    }
+
 }
-//--------------------------------------------------------------
-void ofApp::FreeModeReset(){  //<- Makes that in free mode lights are off
-if(gameState==FreeMode){
-	lightOff(RED);
-	lightOff(BLUE);
-	lightOff(YELLOW);
-	lightOff(GREEN);
-}
-}
+
+
+
 //--------------------------------------------------------------
 void ofApp::GameReset(){
 	//This function will reset the game to its initial state
+	
 	lightOff(RED);
 	lightOff(BLUE);
 	lightOff(YELLOW);
 	lightOff(GREEN);
 	Sequence.clear();
-	generateSequence();
-	userIndex = 0;
-	gameState = PlayingSequence;
-	showingSequenceDuration = 0;
+	recordedSequence.clear();
+	if(NormalPlay){
+		generateSequence();
+		userIndex = 0;
+		gameState = PlayingSequence;
+		showingSequenceDuration = 0;
+	}
+
+	if (FreePlay){
+		userIndex = 0;
+		gameState = FreeMode;
+		showingSequenceDuration = 0;
+
+
+	}
 }
 
 //--------------------------------------------------------------
@@ -309,18 +334,21 @@ void ofApp::lightOff(Buttons color){
 void ofApp::keyPressed(int key){
 	//As long as we're not in Idle OR the gameState is GameOver;
 	//AND we press the SPACEBAR, we will reset the game
-	if((!idle || gameState == GameOver||gameState == FreeMode) && tolower(key) == ' '){
+	if((!idle || gameState == GameOver||gameState==StartUp) && tolower(key) == ' '){
+		NormalPlay = true;
 		GameReset();
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
 		gameState = StartUp;
+		NormalPlay=false;
+		FreePlay=false;
 	}
 	if((!idle && gameState == FreeMode)&& tolower(key) == 'r'){
 		gameState = RecordMode;
 	}
 	if((!idle && gameState == RecordMode)&& tolower(key) == 'p'){
 		gameState = ReplayMode;
-		replaySequence();
+		// replaySequence();
 	}
 
 }

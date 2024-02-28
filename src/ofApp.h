@@ -87,7 +87,12 @@ class ofApp : public ofBaseApp{
 		bool logoIsReady = false;
 		int logoCounter = 0;
 		bool idle = true;
-		bool isRecording = false;
+		// bool isRecording = false; <-podria ser necesaria para lo de pressed r again
+		bool NormalPlay = false;
+		bool FreePlay = false;
+		int replayIndex = 0; 
+        int lastReplayTime = 0; 
+
 
 		//font
 		ofTrueTypeFont font;
