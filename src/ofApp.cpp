@@ -205,11 +205,9 @@ void ofApp::replaySequence() {
     for (int i = 0; i < recordedSequence.size(); i++) {
 		color = recordedSequence[i];
 		lightOn(color); // Simulate button press
+		lightDisplayDuration = 30;
 		ofSleepMillis(1000);
     }
-    
-    // Set the display duration after all button presses are simulated
-    lightDisplayDuration = 30;
 }
 //--------------------------------------------------------------
 void ofApp::GameReset(){
@@ -318,6 +316,9 @@ void ofApp::keyPressed(int key){
 		GameReset();
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
+		recordedSequence.clear();
+		NormalPlay = false;
+		FreePlay = false;
 		gameState = StartUp;
 	}
 	if((!idle && gameState == FreeMode)&& tolower(key) == 'r'){
