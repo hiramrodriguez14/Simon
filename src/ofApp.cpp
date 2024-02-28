@@ -357,6 +357,7 @@ void ofApp::mousePressed(int x, int y, int button){
 		if(MultiplayerButton->wasPressed()){
 			gameState = PlayerOneTurn;
 		}
+	
 
 	if(!idle && gameState == RecordMode ){
 
@@ -367,24 +368,31 @@ void ofApp::mousePressed(int x, int y, int button){
 
 		if(RedButton->wasPressed()){
 			color = RED;
-		recordedSequence.push_back(color);
+			lightOn(color);
+			lightDisplayDuration = 15;
+			recordedSequence.push_back(color);
 
 		}
 		else if(BlueButton->wasPressed()){
 			color = BLUE;
-			recordedSequence.push_back(color);	
+			lightOn(color);
+			lightDisplayDuration = 15;
+			recordedSequence.push_back(color);
+
 		}
 		else if(YellowButton->wasPressed()){
 			color = YELLOW;
+			lightOn(color);
+			lightDisplayDuration = 15;
 			recordedSequence.push_back(color);
 
 		}
 		else if(GreenButton->wasPressed()){
 			color = GREEN;
+			lightOn(color);
+			lightDisplayDuration = 15;
 			recordedSequence.push_back(color);
 		}
-		lightOn(color);
-		lightDisplayDuration = 15;
 	}
 	if(!idle && gameState == PlayerInput){
 		//We mark the pressed button as "pressed"
@@ -396,19 +404,24 @@ void ofApp::mousePressed(int x, int y, int button){
 		//We check which button got pressed
 		if(RedButton->wasPressed()){
 			color = RED;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
 		else if(BlueButton->wasPressed()){
 			color = BLUE;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
 		else if(YellowButton->wasPressed()){
 			color = YELLOW;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
 		else if(GreenButton->wasPressed()){
 			color = GREEN;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
-		//Light up the pressed button for a few ticks
-		lightOn(color);
-		lightDisplayDuration = 15;
 			//If the user input is correct, we can continue checking
 			if(checkUserInput(color)){
 				userIndex++;
