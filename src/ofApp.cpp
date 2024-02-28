@@ -186,12 +186,10 @@ void ofApp::draw(){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("FREEMODE!",/*width*/2+47,/*height*/2+670);
 		ofDrawBitmapString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-	}
-	if(!idle && gameState==FreeMode){
+	}else if(!idle && gameState==FreeMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE!",/*width*/2+47,/*height*/2+670);	
-	}
-	if(!idle && gameState==RecordMode){
+	}else if(!idle && gameState==RecordMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);
 		
