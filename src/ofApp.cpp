@@ -10,7 +10,7 @@ void ofApp::setup(){
 	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
 	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/CompButton.mp3");
 	ResetButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+150,100,100,"images/resetButton.png","sounds/ResetButton.mp3");
-	MultiplayerButton= new Button(ofGetWindowWidth()/2-495,ofGetWindowHeight()/2+200,100,100,"images/MultiplayerMode.png","sounds/ResetButton.mp3");
+	MultiplayerButton= new Button(ofGetWindowWidth()/2+400,ofGetWindowHeight()/2+280,100,100,"images/MultiplayerMode.png","sounds/ResetButton.mp3");
 
 
 	//Load the glowing images for the buttons
@@ -36,21 +36,29 @@ void ofApp::setup(){
 
 	//Initial State
 	gameState = StartUp;
+
+	//load font
+	//font.load("font.ttf", 36);<el path de el font aqui segundo parametro es el thickness del font
+	
 }
 //--------------------------------------------------------------
 void ofApp::update(){
 
 	//We will tick the buttons, aka constantly update them
 	//while expecting input from the user to see if anything changed
-	//if (!idle || gameState == FreeMode){
-	//	ResetButton->tick();
-	//}
+	
 
 	if(gameState == StartUp){
 		CompButton->tick();
 		MultiplayerButton->tick();
 	}
-	if(gameState == FreeMode){
+	if(gameState == RecordMode){
+		RedButton->tick();
+		BlueButton->tick();
+		GreenButton->tick();
+		YellowButton->tick();}
+
+	if(gameState == ReplayMode){
 		RedButton->tick();
 		BlueButton->tick();
 		GreenButton->tick();
@@ -84,6 +92,7 @@ void ofApp::update(){
 			lightOff(GREEN);
 		}
 	}
+	
 }
 
 //--------------------------------------------------------------
@@ -101,7 +110,6 @@ void ofApp::draw(){
 	if(!idle && gameState == StartUp){
 		CompButton->render();
 		MultiplayerButton->render();
-		//CompButton->playSound();
 	}
 
 	
@@ -127,7 +135,6 @@ void ofApp::draw(){
 		}
 	}
 
-	
 
 	//StartUP (You dont need to pay much attention to this)
 	//(This is only to create a animation effect at the start of the game)
@@ -165,6 +172,51 @@ void ofApp::draw(){
 	else if(!idle && gameState == StartUp){
 		startUpScreen.draw(20,0,1024,768);
 	}
+	
+	//This will draw the red dot when being on record mode
+	if(gameState==RecordMode){
+		redDot.draw(ofGetWindowWidth()/2-545, ofGetWindowHeight()/2-400, 150, 100);
+	}
+	//This will draw the green dot when being on replay mode
+	if(gameState==ReplayMode){
+		greenDot.draw(ofGetWindowWidth()/2-500, ofGetWindowHeight()/2-370, 50, 50);
+	}
+
+	if(!idle && gameState==StartUp){
+		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
+		ofDrawBitmapString("FREEMODE!",/*width*/2+47,/*height*/2+670);
+		ofDrawBitmapString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
+	}else if(!idle && gameState==FreeMode){
+		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
+		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE!",/*width*/2+47,/*height*/2+670);	
+	}else if(!idle && gameState==RecordMode){
+		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
+		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);
+		
+	}
+
+	
+
+}
+
+	
+//--------------------------------------------------------------
+void ofApp::replaySequence() {
+    for (int i = 0; i < recordedSequence.size(); i++) {
+        lightOn(recordedSequence[i]); // Simulate button press
+    }
+    
+    // Set the display duration after all button presses are simulated
+    lightDisplayDuration = 30;
+}
+//--------------------------------------------------------------
+void ofApp::FreeModeReset(){  //<- Makes that in free mode lights are off
+if(gameState==FreeMode){
+	lightOff(RED);
+	lightOff(BLUE);
+	lightOff(YELLOW);
+	lightOff(GREEN);
+}
 }
 //--------------------------------------------------------------
 void ofApp::GameReset(){
@@ -257,12 +309,20 @@ void ofApp::lightOff(Buttons color){
 void ofApp::keyPressed(int key){
 	//As long as we're not in Idle OR the gameState is GameOver;
 	//AND we press the SPACEBAR, we will reset the game
-	if((!idle || gameState == GameOver) && tolower(key) == ' '){
+	if((!idle || gameState == GameOver||gameState == FreeMode) && tolower(key) == ' '){
 		GameReset();
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
 		gameState = StartUp;
 	}
+	if((!idle && gameState == FreeMode)&& tolower(key) == 'r'){
+		gameState = RecordMode;
+	}
+	if((!idle && gameState == RecordMode)&& tolower(key) == 'p'){
+		gameState = ReplayMode;
+		replaySequence();
+	}
+
 }
 
 //--------------------------------------------------------------
@@ -287,41 +347,44 @@ void ofApp::mousePressed(int x, int y, int button){
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
 		MultiplayerButton->setPressed(x,y);
-		if(CompButton->wasPressed()){
+	}
+		if(!idle && gameState== StartUp && CompButton->wasPressed()){
 			CompButton->playSound();
 			gameState = FreeMode;
-		if(MultiplayerButton->wasPressed();){
+			// FreeModeReset();
+			}
+
+		if(MultiplayerButton->wasPressed()){
 			gameState = PlayerOneTurn;
 		}
 
-	}
-	}
-	if(!idle && gameState == FreeMode){
+	if(!idle && gameState == RecordMode ){
+
 		RedButton->setPressed(x,y);
 		BlueButton->setPressed(x,y);
 		GreenButton->setPressed(x,y);
 		YellowButton->setPressed(x,y);
+
 		if(RedButton->wasPressed()){
 			color = RED;
-			lightOn(color);
-			lightDisplayDuration = 15;
+		recordedSequence.push_back(color);
+
 		}
 		else if(BlueButton->wasPressed()){
 			color = BLUE;
-			lightOn(color);
-			lightDisplayDuration = 15;
-			
+			recordedSequence.push_back(color);	
 		}
 		else if(YellowButton->wasPressed()){
 			color = YELLOW;
-			lightOn(color);
-			lightDisplayDuration = 15;
+			recordedSequence.push_back(color);
+
 		}
 		else if(GreenButton->wasPressed()){
 			color = GREEN;
-			lightOn(color);
-			lightDisplayDuration = 15;
+			recordedSequence.push_back(color);
 		}
+		lightOn(color);
+		lightDisplayDuration = 15;
 	}
 	if(!idle && gameState == PlayerInput){
 		//We mark the pressed button as "pressed"

@@ -13,7 +13,9 @@ class ofApp : public ofBaseApp{
 		PlayerInput,
 		PlayerOneTurn,
 		PlayerTwoTurn,
-		GameOver
+		GameOver,
+		ReplayMode,
+		RecordMode
 
 	};
 
@@ -41,11 +43,15 @@ class ofApp : public ofBaseApp{
 		bool checkUserInput(Buttons c);
 		void GameReset();
 		void startUpSequence(int count);
+		void FreeModeReset();
+		void replaySequence();
+		
 		
 	private:
 		//This vector will basically act as list of button enums
 		//for us to be able to store the sequences
 		vector<Buttons> Sequence;
+		vector<Buttons> recordedSequence;
 
 		//Let's declare the buttons we will use
 		Button *RedButton;
@@ -81,5 +87,9 @@ class ofApp : public ofBaseApp{
 		bool logoIsReady = false;
 		int logoCounter = 0;
 		bool idle = true;
+		bool isRecording = false;
+
+		//font
+		ofTrueTypeFont font;
 		
 };
