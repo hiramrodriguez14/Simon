@@ -10,6 +10,8 @@ void ofApp::setup(){
 	GreenButton = new Button(ofGetWindowWidth()/2-260,ofGetWindowHeight()/2-260,234,294,"images/GreenButton.png","sounds/GreenButton.mp3");
 	CompButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+280,150,100,"images/CompButton.png","sounds/CompButton.mp3");
 	ResetButton = new Button(ofGetWindowWidth()/2-500,ofGetWindowHeight()/2+150,100,100,"images/resetButton.png","sounds/ResetButton.mp3");
+	MultiplayerButton= new Button(ofGetWindowWidth()/2-495,ofGetWindowHeight()/2+200,100,100,"images/MultiplayerMode.png","sounds/ResetButton.mp3");
+
 
 	//Load the glowing images for the buttons
 	redLight.load("images/RedLight.png");
@@ -46,6 +48,7 @@ void ofApp::update(){
 
 	if(gameState == StartUp){
 		CompButton->tick();
+		MultiplayerButton->tick();
 	}
 	if(gameState == FreeMode){
 		RedButton->tick();
@@ -97,6 +100,7 @@ void ofApp::draw(){
 	//ResetButton->render();
 	if(!idle && gameState == StartUp){
 		CompButton->render();
+		MultiplayerButton->render();
 		//CompButton->playSound();
 	}
 
@@ -256,7 +260,7 @@ void ofApp::keyPressed(int key){
 	if((!idle || gameState == GameOver) && tolower(key) == ' '){
 		GameReset();
 	}
-	if((!idle) && tolower(key) == 'e'){
+	if((!idle) && key == OF_KEY_BACKSPACE){
 		gameState = StartUp;
 	}
 }
@@ -280,17 +284,15 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 	//If we're not in Idle and the gameState equals PlayerInput,
 	//We will pay attention to the mousePresses from the user
-	//if(!idle || gameState == FreeMode){
-		//ResetButton->setPressed(x,y);
-		//if(ResetButton->wasPressed()){
-			//gameState = StartUp;
-		//}
-	
 	if(!idle && gameState == StartUp){
 		CompButton->setPressed(x,y);
+		MultiplayerButton->setPressed(x,y);
 		if(CompButton->wasPressed()){
 			CompButton->playSound();
 			gameState = FreeMode;
+		if(MultiplayerButton->wasPressed();){
+			gameState = PlayerOneTurn;
+		}
 
 	}
 	}
@@ -301,20 +303,25 @@ void ofApp::mousePressed(int x, int y, int button){
 		YellowButton->setPressed(x,y);
 		if(RedButton->wasPressed()){
 			color = RED;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
 		else if(BlueButton->wasPressed()){
 			color = BLUE;
+			lightOn(color);
+			lightDisplayDuration = 15;
+			
 		}
 		else if(YellowButton->wasPressed()){
 			color = YELLOW;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
 		else if(GreenButton->wasPressed()){
 			color = GREEN;
+			lightOn(color);
+			lightDisplayDuration = 15;
 		}
-		//Light up the pressed button for a few ticks
-		lightOn(color);
-		lightDisplayDuration = 15;
-	}
 	}
 	if(!idle && gameState == PlayerInput){
 		//We mark the pressed button as "pressed"
@@ -349,6 +356,7 @@ void ofApp::mousePressed(int x, int y, int button){
 				gameState = GameOver;
 			}
 	}
+}
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){

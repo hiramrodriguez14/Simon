@@ -11,6 +11,8 @@ class ofApp : public ofBaseApp{
 		FreeMode,
 		PlayingSequence,
 		PlayerInput,
+		PlayerOneTurn,
+		PlayerTwoTurn,
 		GameOver
 
 	};
@@ -52,6 +54,7 @@ class ofApp : public ofBaseApp{
 		Button *GreenButton;
 		Button *CompButton;
 		Button *ResetButton;
+		Button *MultiplayerButton;
 
 		//These will be mere images which we will draw on top
 		//of the actual buttons to give the mere illusion
