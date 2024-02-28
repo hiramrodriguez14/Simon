@@ -70,6 +70,13 @@ void ofApp::update(){
 		YellowButton->tick();
 		GreenButton->tick();
 
+	if(gameState == PlayerOneInput){
+		RedButton->tick();
+		BlueButton->tick();
+		YellowButton->tick();
+		GreenButton->tick();
+	}
+
 		//If the amount of user input equals the sequence limit
 		//that means the user has successfully completed the whole
 		//sequence and we can proceed with the next level
@@ -137,6 +144,25 @@ void ofApp::draw(){
 			gameState = PlayerInput;
 		}
 	}
+	if(gameState == PlayerOneTurn){
+		showingSequenceDuration++;
+		if(showingSequenceDuration == 120){
+			color = p1Sequence[userIndex];
+			lightOn(color);
+			lightDisplayDuration = 30;
+		}
+
+		if(showingSequenceDuration == 140){
+			lightOff(color);
+			showingSequenceDuration = 60;
+			userIndex++;
+		}
+		if(userIndex == sequenceLimit){
+			lightOff(color);
+			userIndex = 0;
+			gameState = PlayerOneInput;
+		}
+	}
 
 
 	//StartUP (You dont need to pay much attention to this)
@@ -197,6 +223,9 @@ void ofApp::draw(){
 		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);
 		
 	}
+	else if(!idle && gameState == PlayerOneTurn){
+		ofDrawBitmapString("Player 1s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
+	}
 
 	
 
@@ -252,8 +281,13 @@ void ofApp::GameReset(){
 		userIndex = 0;
 		gameState = FreeMode;
 		showingSequenceDuration = 0;
+	}
 
-
+	if(p1turn){
+		generateSequence();
+		userIndex = 0;
+		gameState = PlayerOneTurn;
+		showingSequenceDuration = 0;
 	}
 }
 
@@ -262,34 +296,65 @@ void ofApp::generateSequence(){
 
 	//This function will generate a random number between 0 and 3
 	//of random doesnt include 4 so its between 0 and 3
-	int random = ofRandom(4);
+	if(NormalPlay){
+		int random = ofRandom(4);
 	
 	//Depending on the random number, we will add a button to the sequence
-	if(random == 0){
-		Sequence.push_back(RED);
-	}
-	else if(random == 1){
-		Sequence.push_back(BLUE);
-	}
-	else if(random == 2){
-		Sequence.push_back(GREEN);
-	}
-	else if(random == 3){
-		Sequence.push_back(YELLOW);
+		if(random == 0){
+			Sequence.push_back(RED);
+		}
+		else if(random == 1){
+			Sequence.push_back(BLUE);
+		}
+		else if(random == 2){
+			Sequence.push_back(GREEN);
+		}
+		else if(random == 3){
+			Sequence.push_back(YELLOW);
+		}
+
+		//We will adjust the sequence limit to the new size of the Sequence list
+		sequenceLimit = Sequence.size();
 	}
 
-	//We will adjust the sequence limit to the new size of the Sequence list
-	sequenceLimit = Sequence.size();
+	if(p1turn){
+		int random = ofRandom(4);
+
+		if (random == 0){
+			p1Sequence.push_back(RED);
+		}
+		else if(random == 1){
+			p1Sequence.push_back(BLUE);
+		}
+		else if(random == 2){
+			p1Sequence.push_back(GREEN);
+		}
+		else if(random == 3){
+			p1Sequence.push_back(YELLOW);
+		}
+
+		sequenceLimit=p1Sequence.size();
+	}
 }
 //--------------------------------------------------------------
 bool ofApp::checkUserInput(Buttons input){
 	//This function will varify if the user input matches the color
 	//of the sequence at the current index
-	if(Sequence[userIndex] == input){
-		return true;
+	if(NormalPlay){
+		if(Sequence[userIndex] == input){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
-	else{
-		return false;
+	if(p1turn){
+		if(p1Sequence[userIndex] == input){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }
 //--------------------------------------------------------------
@@ -341,7 +406,9 @@ void ofApp::keyPressed(int key){
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
 		recordedSequence.clear();
+		p1Sequence.clear();
 		NormalPlay = false;
+		p1turn = false;
 		FreePlay = false;
 		gameState = StartUp;
 		NormalPlay=false;
@@ -389,7 +456,10 @@ void ofApp::mousePressed(int x, int y, int button){
 		}
 
 		if(MultiplayerButton->wasPressed()){
-			gameState = PlayerOneTurn;
+			MultiplayerButton->playSound();
+			p1turn=true;
+			GameReset();
+
 		}
 	
 
@@ -464,6 +534,42 @@ void ofApp::mousePressed(int x, int y, int button){
 			//putting it in the GameOver state.
 			else{
 				gameState = GameOver;
+			}
+	}
+
+	if(!idle && gameState == PlayerOneInput){
+		RedButton->setPressed(x,y);
+		BlueButton->setPressed(x,y);
+		YellowButton->setPressed(x,y);
+		GreenButton->setPressed(x,y);
+
+		if(RedButton->wasPressed()){
+			color = RED;
+			lightOn(color);
+			lightDisplayDuration = 15;
+
+
+		}
+		else if(BlueButton->wasPressed()){
+			color = BLUE;
+			lightOn(color);
+			lightDisplayDuration = 15;
+		}
+		else if(GreenButton->wasPressed()){
+			color = GREEN;
+			lightOn(color);
+			lightDisplayDuration = 15;
+		}
+		else if(YellowButton->wasPressed()){
+			color = YELLOW;
+			lightOn(color);
+			lightDisplayDuration = 15;
+		}
+			if(checkUserInput(color)){
+				userIndex++;
+			}
+			else{
+				gameState == GameOver;
 			}
 	}
 }

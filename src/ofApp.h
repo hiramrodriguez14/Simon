@@ -12,7 +12,9 @@ class ofApp : public ofBaseApp{
 		PlayingSequence,
 		PlayerInput,
 		PlayerOneTurn,
+		PlayerOneInput,
 		PlayerTwoTurn,
+		PlayerTwoInput,
 		GameOver,
 		ReplayMode,
 		RecordMode
@@ -52,6 +54,9 @@ class ofApp : public ofBaseApp{
 		//for us to be able to store the sequences
 		vector<Buttons> Sequence;
 		vector<Buttons> recordedSequence;
+		vector<Buttons> p1Sequence;
+		vector<Buttons> p2Sequence;
+
 
 		//Let's declare the buttons we will use
 		Button *RedButton;
@@ -90,8 +95,11 @@ class ofApp : public ofBaseApp{
 		// bool isRecording = false; <-podria ser necesaria para lo de pressed r again
 		bool NormalPlay = false;
 		bool FreePlay = false;
+		bool p1turn = false;
+		bool p2turn = false;
 		int replayIndex = 0; 
         int lastReplayTime = 0; 
+
 
 
 		//font
