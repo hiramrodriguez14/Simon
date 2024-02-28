@@ -85,6 +85,9 @@ class ofApp : public ofBaseApp{
         ofSoundPlayer backgroundMusic;
 		int sequenceLimit = 1;
 		int userIndex = 1;
+		//indexes for independent players
+		int p1Index =1;
+		int p2Index = 1;
 		int showingSequenceDuration = 0;
 		int lightDisplayDuration = -1;
 		Buttons color;

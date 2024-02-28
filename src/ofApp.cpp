@@ -147,7 +147,7 @@ void ofApp::draw(){
 	if(gameState == PlayerOneTurn){
 		showingSequenceDuration++;
 		if(showingSequenceDuration == 120){
-			color = p1Sequence[userIndex];
+			color = p1Sequence[p1Index];
 			lightOn(color);
 			lightDisplayDuration = 30;
 		}
@@ -155,11 +155,11 @@ void ofApp::draw(){
 		if(showingSequenceDuration == 140){
 			lightOff(color);
 			showingSequenceDuration = 60;
-			userIndex++;
+			p1Index++;
 		}
-		if(userIndex == sequenceLimit){
+		if(p1Index == sequenceLimit){
 			lightOff(color);
-			userIndex = 0;
+			p1Index = 0;
 			gameState = PlayerOneInput;
 		}
 	}
@@ -285,7 +285,7 @@ void ofApp::GameReset(){
 
 	if(p1turn){
 		generateSequence();
-		userIndex = 0;
+		p1Index = 0;
 		gameState = PlayerOneTurn;
 		showingSequenceDuration = 0;
 	}
@@ -349,7 +349,7 @@ bool ofApp::checkUserInput(Buttons input){
 		}
 	}
 	if(p1turn){
-		if(p1Sequence[userIndex] == input){
+		if(p1Sequence[p1Index] == input){
 			return true;
 		}
 		else{
@@ -566,7 +566,7 @@ void ofApp::mousePressed(int x, int y, int button){
 			lightDisplayDuration = 15;
 		}
 			if(checkUserInput(color)){
-				userIndex++;
+				p1Index++;
 			}
 			else{
 				gameState == GameOver;
