@@ -186,10 +186,12 @@ void ofApp::draw(){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("FREEMODE!",/*width*/2+47,/*height*/2+670);
 		ofDrawBitmapString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-	}else if(!idle && gameState==FreeMode){
+	}
+	if(!idle && gameState==FreeMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE!",/*width*/2+47,/*height*/2+670);	
-	}else if(!idle && gameState==RecordMode){
+	}
+	if(!idle && gameState==RecordMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);
 		
@@ -239,7 +241,8 @@ void ofApp::GameReset(){
 void ofApp::generateSequence(){
 
 	//This function will generate a random number between 0 and 3
-	int random = ofRandom(5);
+	//of random doesnt include 4 so its between 0 and 3
+	int random = ofRandom(4);
 	
 	//Depending on the random number, we will add a button to the sequence
 	if(random == 0){
