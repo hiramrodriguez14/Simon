@@ -186,12 +186,10 @@ void ofApp::draw(){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("FREEMODE!",/*width*/2+47,/*height*/2+670);
 		ofDrawBitmapString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-	}
-	if(!idle && gameState==FreeMode){
+	}else if(!idle && gameState==FreeMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE!",/*width*/2+47,/*height*/2+670);	
-	}
-	if(!idle && gameState==RecordMode){
+	}else if(!idle && gameState==RecordMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);
 		
@@ -314,7 +312,7 @@ void ofApp::lightOff(Buttons color){
 void ofApp::keyPressed(int key){
 	//As long as we're not in Idle OR the gameState is GameOver;
 	//AND we press the SPACEBAR, we will reset the game
-	if(!idle || gameState == GameOver && tolower(key) == ' '){
+	if((!idle || gameState == GameOver) && tolower(key) == ' '){
 		NormalPlay = true;
 		GameReset();
 	}
@@ -322,6 +320,7 @@ void ofApp::keyPressed(int key){
 		gameState = StartUp;
 	}
 	if((!idle && gameState == FreeMode)&& tolower(key) == 'r'){
+		recordedSequence.clear();
 		gameState = RecordMode;
 	}
 	if((!idle && gameState == RecordMode)&& tolower(key) == 'p'){
