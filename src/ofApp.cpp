@@ -191,10 +191,10 @@ void ofApp::draw(){
 		ofDrawBitmapString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 	}else if(!idle && gameState==FreeMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE!",/*width*/2+47,/*height*/2+670);	
+		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);	
 	}else if(!idle && gameState==RecordMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);
+		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE!",/*width*/2+47,/*height*/2+670);
 		
 	}
 
@@ -347,15 +347,26 @@ void ofApp::keyPressed(int key){
 		NormalPlay=false;
 		FreePlay=false;
 	}
-	if((!idle && gameState == FreeMode)&& tolower(key) == 'r'){
-		recordedSequence.clear();
-		gameState = RecordMode;
-	}
-	if((!idle && gameState == RecordMode)&& tolower(key) == 'p'){
-		gameState = ReplayMode;
-		// replaySequence();
-	}
-
+	if (!idle) {
+        // Check if 'r' key is pressed
+        if (tolower(key) == 'r') {
+            if (gameState == FreeMode) {
+                // Start recording mode
+                gameState = RecordMode;
+                recordedSequence.clear(); // Clear previous recording
+            } else if (gameState == RecordMode) {
+                // End recording mode
+                gameState = FreeMode;
+            }
+        }
+        // Check if 'p' key is pressed
+        else if (tolower(key) == 'p') {
+            if (gameState == FreeMode && recordedSequence.size() > 0) {
+                // Start replay mode
+                gameState = ReplayMode;
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------
