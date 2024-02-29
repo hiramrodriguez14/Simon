@@ -84,6 +84,9 @@ class ofApp : public ofBaseApp{
 		//Few variables we'll need
         ofSoundPlayer backgroundMusic;
 		int sequenceLimit = 1;
+		// limits for players
+		int p1limit = 1;
+		int p2limit = 1;
 		int userIndex = 1;
 		//indexes for independent players
 		int p1Index =1;
@@ -101,7 +104,9 @@ class ofApp : public ofBaseApp{
 		bool p1turn = false;
 		bool p2turn = false;
 		int replayIndex = 0; 
-        int lastReplayTime = 0; 
+        int lastReplayTime = 0;
+		bool firstrun = true;
+
 
 
 

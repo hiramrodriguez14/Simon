@@ -62,9 +62,15 @@ void ofApp::update(){
 		showingSequenceDuration = 0;
 		gameState = PlayingSequence;
 	}
-	if (gameState == PlayerOneInput && p1Index == sequenceLimit) {
+	if (gameState == PlayerOneInput && p1Index == p1limit) {
 		generateSequence();
 		p1Index = 0;
+		showingSequenceDuration = 0;
+		gameState = PlayerTwoTurn;
+	}
+	if(gameState == PlayerTwoInput && p2Index == p2limit){
+		generateSequence();
+		p2Index = 0;
 		showingSequenceDuration = 0;
 		gameState = PlayerOneTurn;
 	}
@@ -138,10 +144,29 @@ void ofApp::draw(){
 			showingSequenceDuration = 60;
 			p1Index++;
 		}
-		if(p1Index == sequenceLimit){
+		if(p1Index == p1limit){
 			lightOff(color);
 			p1Index = 0;
 			gameState = PlayerOneInput;
+		}
+	}
+	if(gameState == PlayerTwoTurn){
+		showingSequenceDuration++;
+		if(showingSequenceDuration == 120){
+			color = p2Sequence[p2Index];
+			lightOn(color);
+			lightDisplayDuration;
+		}
+		
+		if(showingSequenceDuration == 140){
+			lightOff(color);
+			showingSequenceDuration == 60;
+			p2Index++;
+		}
+		if(p2Index == p2limit){
+			lightOff(color);
+			p1Index = 0;
+			gameState = PlayerTwoInput;
 		}
 	}
 
@@ -204,12 +229,12 @@ void ofApp::draw(){
 		myFont.drawString("PLAY A SEQUENCE AND PRESS 'r' AGAIN TO STOP THE SEQUENCE!",/*width*/2+10,/*height*/2+670);
 		
 	}
-	else if(!idle && (gameState == PlayerOneTurn ||gameState== PlayerOneInput)){
-		myFont.drawString("PLAYER 1 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
-		
+	else if(!idle && (gameState == PlayerOneTurn || gameState == PlayerOneInput)){
+		ofDrawBitmapString("Player 1s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
 	}
-	else if(!idle && (gameState == PlayerTwoTurn ||gameState== PlayerTwoInput)){
-		myFont.drawString("PLAYER 2 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
+	else if(!idle && (gameState == PlayerTwoInput || gameState == PlayerTwoTurn)){
+		ofDrawBitmapString("Player 2s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
+		
 	}
 
 	
@@ -313,7 +338,7 @@ void ofApp::generateSequence(){
 		sequenceLimit = Sequence.size();
 	}
 
-	if(p1turn){
+	if(p1turn || (gameState == PlayerOneInput)){
 		int random = ofRandom(4);
 
 		if (random == 0){
@@ -329,8 +354,28 @@ void ofApp::generateSequence(){
 			p1Sequence.push_back(YELLOW);
 		}
 
-		sequenceLimit=p1Sequence.size();
+		p1limit=p1Sequence.size();
 	}
+	if(gameState== PlayerTwoInput || firstrun){
+		int random = ofRandom(4);
+
+		if(random == 0){
+			p2Sequence.push_back(RED);
+		}
+
+		else if(random == 1){
+			p2Sequence.push_back(BLUE);
+		}
+		else if(random == 2){
+			p2Sequence.push_back(GREEN);
+		}
+		else if(random == 3){
+			p2Sequence.push_back(YELLOW);
+		}
+		p2limit=p2Sequence.size();
+	}
+	p1turn = false;
+	firstrun = false;
 }
 //--------------------------------------------------------------
 bool ofApp::checkUserInput(Buttons input){
@@ -344,7 +389,7 @@ bool ofApp::checkUserInput(Buttons input){
 			return false;
 		}
 	}
-	else if(p1turn){
+	else if(gameState == PlayerOneInput){
 		if(p1Sequence[p1Index] == input){
 			return true;
 		}
@@ -352,7 +397,14 @@ bool ofApp::checkUserInput(Buttons input){
 			return false;
 		}
 	}
-	return false;
+	else if(gameState == PlayerTwoInput){
+		if(p2Sequence[p2Index] == input){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
 //--------------------------------------------------------------
 void ofApp::lightOn(Buttons color){
@@ -586,6 +638,41 @@ void ofApp::mousePressed(int x, int y, int button){
 		}
 			if(checkUserInput(color)){
 				p1Index++;
+			}
+			else{
+				gameState = GameOver;
+			}
+	}
+	if(!idle && gameState == PlayerTwoInput){
+		RedButton->setPressed(x,y);
+		BlueButton->setPressed(x,y);
+		GreenButton->setPressed(x,y);
+		YellowButton->setPressed(x,y);
+
+		if(RedButton->wasPressed()){
+			color = RED;
+			lightOn(color);
+			lightDisplayDuration = 15;
+		}
+		else if(BlueButton->wasPressed()){
+			color = BLUE;
+			lightOn(color);
+			lightDisplayDuration = 15;
+		}
+		else if(GreenButton->wasPressed()){
+			color = GREEN;
+			lightOn(color);
+			lightDisplayDuration = 15;
+		}
+		else if(YellowButton->wasPressed()){
+			color = YELLOW;
+			lightOn(color);
+			lightDisplayDuration = 15;
+
+
+		}
+			if(checkUserInput(color)){
+				p2Index++;
 			}
 			else{
 				gameState = GameOver;
