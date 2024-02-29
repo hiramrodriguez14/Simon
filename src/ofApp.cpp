@@ -223,7 +223,6 @@ void ofApp::replaySequence() {
     if (replayIndex >= recordedSequence.size()) {
         // Reset variables and set display duration
         replayIndex = 0;
-        recordedSequence.clear();
 		gameState=FreeMode;
     }
 
@@ -352,10 +351,12 @@ void ofApp::keyPressed(int key){
         if (tolower(key) == 'r') {
             if (gameState == FreeMode) {
                 // Start recording mode
+				CompButton->playSound();
                 gameState = RecordMode;
                 recordedSequence.clear(); // Clear previous recording
             } else if (gameState == RecordMode) {
                 // End recording mode
+				CompButton->playSound();
                 gameState = FreeMode;
             }
         }
@@ -363,6 +364,7 @@ void ofApp::keyPressed(int key){
         else if (tolower(key) == 'p') {
             if (gameState == FreeMode && recordedSequence.size() > 0) {
                 // Start replay mode
+				CompButton->playSound();
                 gameState = ReplayMode;
             }
         }
