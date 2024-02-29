@@ -155,12 +155,12 @@ void ofApp::draw(){
 		if(showingSequenceDuration == 120){
 			color = p2Sequence[p2Index];
 			lightOn(color);
-			lightDisplayDuration;
+			lightDisplayDuration=15;
 		}
 		
 		if(showingSequenceDuration == 140){
 			lightOff(color);
-			showingSequenceDuration == 60;
+			showingSequenceDuration = 60;
 			p2Index++;
 		}
 		if(p2Index == p2limit){
@@ -405,6 +405,7 @@ bool ofApp::checkUserInput(Buttons input){
 			return false;
 		}
 	}
+	return false;
 }
 //--------------------------------------------------------------
 void ofApp::lightOn(Buttons color){
