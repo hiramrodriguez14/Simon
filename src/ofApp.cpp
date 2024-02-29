@@ -62,6 +62,12 @@ void ofApp::update(){
 		showingSequenceDuration = 0;
 		gameState = PlayingSequence;
 	}
+	if (gameState == PlayerOneInput && p1Index == sequenceLimit) {
+		generateSequence();
+		p1Index = 0;
+		showingSequenceDuration = 0;
+		gameState = PlayerOneTurn;
+	}
 
 	// This will take care of turning off the lights after a few ticks
 	// so that they don't stay turned on forever or too long
@@ -244,6 +250,7 @@ void ofApp::GameReset(){
 	lightOff(GREEN);
 	Sequence.clear();
 	recordedSequence.clear();
+	p1Sequence.clear();
 	if(NormalPlay){
 		generateSequence();
 		userIndex = 0;
@@ -322,7 +329,7 @@ bool ofApp::checkUserInput(Buttons input){
 			return false;
 		}
 	}
-	if(p1turn){
+	else if(p1turn){
 		if(p1Sequence[p1Index] == input){
 			return true;
 		}
@@ -375,8 +382,13 @@ void ofApp::keyPressed(int key){
 	//As long as we're not in Idle OR the gameState is GameOver;
 	//AND we press the SPACEBAR, we will reset the game
 	if((!idle || gameState == GameOver||gameState==StartUp) && tolower(key) == ' '){
-		NormalPlay = true;
-		GameReset();
+		if (gameState == StartUp){
+			NormalPlay = true;
+			GameReset();	
+		}
+		else if(p1turn){
+			GameReset();
+		}
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
 		recordedSequence.clear();
