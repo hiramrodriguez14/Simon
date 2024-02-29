@@ -38,8 +38,8 @@ void ofApp::setup(){
 	gameState = StartUp;
 
 	//load font
-	//font.load("font.ttf", 36);<el path de el font aqui segundo parametro es el thickness del font
-	
+	font.load("fonts/extra_bold.ttf", 36);//<-The font path and thickness
+	myFont.load("fonts/bold.ttf",10);
 }
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -194,26 +194,37 @@ void ofApp::draw(){
 
 	if(!idle && gameState==StartUp){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-		ofDrawBitmapString("FREEMODE!",/*width*/2+47,/*height*/2+670);
-		ofDrawBitmapString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
+		myFont.drawString("FREEMODE!",/*width*/2+47,/*height*/2+670);
+		myFont.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 	}else if(!idle && gameState==FreeMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-		ofDrawBitmapString("PRESS 'r' TO RECORD YOUR SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);	
+		myFont.drawString("PRESS 'r' TO RECORD YOUR SEQUENCE OR\n     PRESS 'p' TO REPLAY SEQUENCE!",/*width*/2+47,/*height*/2+670);	
 	}else if(!idle && gameState==RecordMode){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
-		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE!",/*width*/2+47,/*height*/2+670);
+		myFont.drawString("PLAY A SEQUENCE AND PRESS 'r' AGAIN TO STOP THE SEQUENCE!",/*width*/2+10,/*height*/2+670);
 		
 	}
 	else if(!idle && (gameState == PlayerOneTurn ||gameState== PlayerOneInput)){
-		ofDrawBitmapString("Player 1s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
+		myFont.drawString("PLAYER 1 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
 		
 	}
 	else if(!idle && (gameState == PlayerTwoTurn ||gameState== PlayerTwoInput)){
-		ofDrawBitmapString("Player 2 Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
+		myFont.drawString("PLAYER 2 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
 	}
 
 	
-
+	if(!idle && (gameState==PlayingSequence || gameState==PlayerInput)){
+		font.drawString("Classic Mode", 2+350, 2 + 70);
+	}
+	if(!idle && (gameState==FreeMode || gameState==RecordMode ||gameState==ReplayMode)){
+		font.drawString("Free Mode", 2+390, 2 + 70);
+	}
+	if(!idle && (gameState==PlayerOneInput|| gameState==PlayerTwoInput || gameState== PlayerOneTurn || gameState == PlayerTwoTurn)){
+		font.drawString("Multiplayer", 2+360, 2 + 70);
+	}
+	if(!idle && !gameState==StartUp){
+		myFont.drawString("PRESS BACKSPACE KEY TO GO TO MAIN MENU",2+720, 2 + 750);
+	}
 }
 
 	

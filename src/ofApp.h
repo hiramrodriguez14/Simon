@@ -107,5 +107,5 @@ class ofApp : public ofBaseApp{
 
 		//font
 		ofTrueTypeFont font;
-		
+		ofTrueTypeFont myFont;
 };
