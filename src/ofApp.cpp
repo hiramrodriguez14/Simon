@@ -204,8 +204,12 @@ void ofApp::draw(){
 		ofDrawBitmapString("PRESS 'r' AGAIN TO STOP THE SEQUENCE!",/*width*/2+47,/*height*/2+670);
 		
 	}
-	else if(!idle && gameState == PlayerOneTurn){
+	else if(!idle && (gameState == PlayerOneTurn ||gameState== PlayerOneInput)){
 		ofDrawBitmapString("Player 1s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
+		
+	}
+	else if(!idle && (gameState == PlayerTwoTurn ||gameState== PlayerTwoInput)){
+		ofDrawBitmapString("Player 2 Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
 	}
 
 	
