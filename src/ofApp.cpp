@@ -44,55 +44,48 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-	//We will tick the buttons, aka constantly update them
-	//while expecting input from the user to see if anything changed
-	
+	// We will tick the buttons, aka constantly update them
+	// while expecting input from the user to see if anything changed
 
-	if(gameState == StartUp){
+	if (gameState == StartUp) {
 		CompButton->tick();
 		MultiplayerButton->tick();
 	}
-	if(gameState == RecordMode){
-		RedButton->tick();
-		BlueButton->tick();
-		GreenButton->tick();
-		YellowButton->tick();}
-
-	if(gameState == ReplayMode){
+	if (gameState == RecordMode) {
 		RedButton->tick();
 		BlueButton->tick();
 		GreenButton->tick();
 		YellowButton->tick();
 	}
-	if(gameState == PlayerInput){
+	if (gameState == ReplayMode) {
 		RedButton->tick();
 		BlueButton->tick();
-		YellowButton->tick();
 		GreenButton->tick();
-
-	if(gameState == PlayerOneInput){
+		YellowButton->tick();
+	}
+	if (gameState == PlayerInput || gameState == PlayerOneInput) {
+		MultiplayerButton->tick();
 		RedButton->tick();
 		BlueButton->tick();
 		YellowButton->tick();
 		GreenButton->tick();
 	}
 
-		//If the amount of user input equals the sequence limit
-		//that means the user has successfully completed the whole
-		//sequence and we can proceed with the next level
-		if(userIndex == sequenceLimit){
-			generateSequence();
-			userIndex = 0;
-			showingSequenceDuration = 0;
-			gameState = PlayingSequence;
-		}
+	// If the amount of user input equals the sequence limit
+	// that means the user has successfully completed the whole
+	// sequence and we can proceed with the next level
+	if (gameState == PlayerInput && userIndex == sequenceLimit) {
+		generateSequence();
+		userIndex = 0;
+		showingSequenceDuration = 0;
+		gameState = PlayingSequence;
 	}
 
-	//This will take care of turning on the lights after a few
-	//ticks so that they dont stay turned on forever or too long
-	if(lightDisplayDuration > 0){
+	// This will take care of turning off the lights after a few ticks
+	// so that they don't stay turned on forever or too long
+	if (lightDisplayDuration > 0) {
 		lightDisplayDuration--;
-		if(lightDisplayDuration <= 0){
+		if (lightDisplayDuration <= 0) {
 			lightOff(RED);
 			lightOff(BLUE);
 			lightOff(YELLOW);
@@ -100,7 +93,7 @@ void ofApp::update(){
 		}
 	}
 
-	if(gameState==ReplayMode){
+	if (gameState == ReplayMode) {
 		replaySequence();
 	}
 }
@@ -160,7 +153,7 @@ void ofApp::draw(){
 		if(p1Index == sequenceLimit){
 			lightOff(color);
 			p1Index = 0;
-			gameState = PlayerOneInput;
+			gameState = PlayerTwoInput;
 		}
 	}
 
@@ -448,7 +441,7 @@ void ofApp::mousePressed(int x, int y, int button){
 		CompButton->setPressed(x,y);
 		MultiplayerButton->setPressed(x,y);
 	}
-		if(gameState== StartUp && CompButton->wasPressed()){
+		if(CompButton->wasPressed()){
 			CompButton->playSound();
 			FreePlay = true;
 			GameReset();
@@ -569,7 +562,7 @@ void ofApp::mousePressed(int x, int y, int button){
 				p1Index++;
 			}
 			else{
-				gameState == GameOver;
+				gameState = GameOver;
 			}
 	}
 }
