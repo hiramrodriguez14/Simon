@@ -396,7 +396,8 @@ void ofApp::lightOff(Buttons color){
 void ofApp::keyPressed(int key){
 	//As long as we're not in Idle OR the gameState is GameOver;
 	//AND we press the SPACEBAR, we will reset the game
-	if((!idle || gameState == GameOver||gameState==StartUp) && tolower(key) == ' '){
+	if((!idle || gameState == GameOver) && tolower(key) == ' '){
+		GameReset();
 		if (gameState == StartUp){
 			NormalPlay = true;
 			GameReset();	
