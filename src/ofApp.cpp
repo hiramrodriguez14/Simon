@@ -223,7 +223,6 @@ void ofApp::replaySequence() {
     if (replayIndex >= recordedSequence.size()) {
         // Reset variables and set display duration
         replayIndex = 0;
-        recordedSequence.clear();
 		gameState=FreeMode;
     }
 
