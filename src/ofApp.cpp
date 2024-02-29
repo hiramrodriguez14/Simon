@@ -46,30 +46,12 @@ void ofApp::update(){
 
 	// We will tick the buttons, aka constantly update them
 	// while expecting input from the user to see if anything changed
-
-	if (gameState == StartUp) {
-		CompButton->tick();
-		MultiplayerButton->tick();
-	}
-	if (gameState == RecordMode) {
-		RedButton->tick();
-		BlueButton->tick();
-		GreenButton->tick();
-		YellowButton->tick();
-	}
-	if (gameState == ReplayMode) {
-		RedButton->tick();
-		BlueButton->tick();
-		GreenButton->tick();
-		YellowButton->tick();
-	}
-	if (gameState == PlayerInput || gameState == PlayerOneInput) {
-		MultiplayerButton->tick();
-		RedButton->tick();
-		BlueButton->tick();
-		YellowButton->tick();
-		GreenButton->tick();
-	}
+	CompButton->tick();
+	MultiplayerButton->tick();
+	RedButton->tick();
+	GreenButton->tick();
+	BlueButton->tick();
+	YellowButton->tick();
 
 	// If the amount of user input equals the sequence limit
 	// that means the user has successfully completed the whole
@@ -153,7 +135,7 @@ void ofApp::draw(){
 		if(p1Index == sequenceLimit){
 			lightOff(color);
 			p1Index = 0;
-			gameState = PlayerTwoInput;
+			gameState = PlayerOneInput;
 		}
 	}
 
