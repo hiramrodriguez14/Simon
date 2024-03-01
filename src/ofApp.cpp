@@ -90,6 +90,8 @@ void ofApp::update(){
 	if (gameState == ReplayMode) {
 		replaySequence();
 	}
+	p1Score = "Player 1 Highscore: " + ofToString(p1limit - 1);
+    p2Score = "Player 2 Highscore: " + ofToString(p2limit - 1);
 }
 
 //--------------------------------------------------------------
@@ -288,7 +290,8 @@ void ofApp::replaySequence() {
 //--------------------------------------------------------------
 void ofApp::GameReset(){
 	//This function will reset the game to its initial state
-	
+	p1limit=1;
+	p2limit=1;
 	lightOff(RED);
 	lightOff(BLUE);
 	lightOff(YELLOW);
