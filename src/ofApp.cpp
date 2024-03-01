@@ -155,17 +155,17 @@ void ofApp::draw(){
 		if(showingSequenceDuration == 120){
 			color = p2Sequence[p2Index];
 			lightOn(color);
-			lightDisplayDuration;
+			lightDisplayDuration = 30;
 		}
 		
 		if(showingSequenceDuration == 140){
 			lightOff(color);
-			showingSequenceDuration == 60;
+			showingSequenceDuration = 60;
 			p2Index++;
 		}
 		if(p2Index == p2limit){
 			lightOff(color);
-			p1Index = 0;
+			p2Index = 0;
 			gameState = PlayerTwoInput;
 		}
 	}
@@ -291,6 +291,7 @@ void ofApp::GameReset(){
 	Sequence.clear();
 	recordedSequence.clear();
 	p1Sequence.clear();
+	p2Sequence.clear();
 	if(NormalPlay){
 		generateSequence();
 		userIndex = 0;
@@ -307,6 +308,7 @@ void ofApp::GameReset(){
 	if(p1turn){
 		generateSequence();
 		p1Index = 0;
+		p2Index = 0;
 		gameState = PlayerOneTurn;
 		showingSequenceDuration = 0;
 	}
@@ -356,7 +358,7 @@ void ofApp::generateSequence(){
 
 		p1limit=p1Sequence.size();
 	}
-	if(gameState== PlayerTwoInput || firstrun){
+	if((gameState== PlayerTwoInput || firstrun) && (count < 2 || count > 2)){
 		int random = ofRandom(4);
 
 		if(random == 0){
@@ -376,6 +378,7 @@ void ofApp::generateSequence(){
 	}
 	p1turn = false;
 	firstrun = false;
+	count++;
 }
 //--------------------------------------------------------------
 bool ofApp::checkUserInput(Buttons input){
@@ -461,13 +464,16 @@ void ofApp::keyPressed(int key){
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
 		recordedSequence.clear();
+		count = 1;
 		p1Sequence.clear();
+		p2Sequence.clear();
 		NormalPlay = false;
 		p1turn = false;
 		FreePlay = false;
 		gameState = StartUp;
 		NormalPlay=false;
 		FreePlay=false;
+		firstrun = true;
 	}
 	if (!idle) {
         // Check if 'r' key is pressed
