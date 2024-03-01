@@ -30,7 +30,7 @@ void ofApp::setup(){
 	greenDot.load("images/GreenDot.png");
 	
     //Load Music
-	backgroundMusic.load("sounds/BackgroundMusic.mp3");
+	backgroundMusic.load("sounds/minecraft.mp3");
 	backgroundMusic.setLoop(true);
 	backgroundMusic.play();
 

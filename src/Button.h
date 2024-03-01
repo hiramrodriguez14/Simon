@@ -8,7 +8,6 @@ enum Buttons {
     RED,
     YELLOW,
     BLUE,
-   // MULTI,
     COMP,
     RESET,
     MULT
