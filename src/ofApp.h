@@ -106,6 +106,7 @@ class ofApp : public ofBaseApp{
 		int replayIndex = 0; 
         int lastReplayTime = 0;
 		bool firstrun = true;
+		int count = 1;
 
 
 
