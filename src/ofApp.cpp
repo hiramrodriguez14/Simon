@@ -468,12 +468,14 @@ void ofApp::keyPressed(int key){
 			GameReset();	
 			CompButton->playSound();
 		}
+		//resets multiplayer mode with spacebar
 		else if(multover){
 			multover = false;
 			p1turn = true;
 			GameReset();
 		}
 	}
+	//reset variables going back to the main screen
 	if((!idle) && key == OF_KEY_BACKSPACE){
 		multover = false;
 		recordedSequence.clear();
@@ -537,13 +539,14 @@ void ofApp::mousePressed(int x, int y, int button){
 		CompButton->setPressed(x,y);
 		MultiplayerButton->setPressed(x,y);
 	}
+	//freemode button check
 		if(CompButton->wasPressed()){
 			CompButton->playSound();
 			FreePlay = true;
 			GameReset();
 
 		}
-
+	//multiplayer button check
 		if(MultiplayerButton->wasPressed()){
 			MultiplayerButton->playSound();
 			p1turn=true;
@@ -625,7 +628,7 @@ void ofApp::mousePressed(int x, int y, int button){
 				gameState = GameOver;
 			}
 	}
-
+//checks player ones input and checks if it was correct
 	if(!idle && gameState == PlayerOneInput){
 		RedButton->setPressed(x,y);
 		BlueButton->setPressed(x,y);
@@ -662,6 +665,7 @@ void ofApp::mousePressed(int x, int y, int button){
 				gameState = GameOver;
 			}
 	}
+	//checks player twos inputs and verifies if correct
 	if(!idle && gameState == PlayerTwoInput){
 		RedButton->setPressed(x,y);
 		BlueButton->setPressed(x,y);
