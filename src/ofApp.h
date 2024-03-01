@@ -106,6 +106,8 @@ class ofApp : public ofBaseApp{
 		int replayIndex = 0; 
         int lastReplayTime = 0;
 		bool firstrun = true;
+		string p1Score = "Player 1 Highscore: " + ofToString(p1limit);
+        string p2Score = "Player 2 Highscore: " + ofToString(p2limit);
 
 
 

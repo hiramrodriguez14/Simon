@@ -230,12 +230,12 @@ void ofApp::draw(){
 		
 	}
 	else if(!idle && (gameState == PlayerOneTurn || gameState == PlayerOneInput)){
-		ofDrawBitmapString("Player 1s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
-	}
-	else if(!idle && (gameState == PlayerTwoInput || gameState == PlayerTwoTurn)){
-		ofDrawBitmapString("Player 2s Turn to fill out the sequence!",/*width*/2+47,/*height*/2 + 670);
-		
-	}
+        myFont.drawString("PLAYER 1 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
+    }
+    else if(!idle && (gameState == PlayerTwoInput || gameState == PlayerTwoTurn)){
+        myFont.drawString("PLAYER 2 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
+        
+    }
 
 	
 	if(!idle && (gameState==PlayingSequence || gameState==PlayerInput)){
@@ -250,6 +250,11 @@ void ofApp::draw(){
 	if(!idle && !gameState==StartUp){
 		myFont.drawString("PRESS BACKSPACE KEY TO GO TO MAIN MENU",2+720, 2 + 750);
 	}
+
+	if(!idle && (gameState==PlayerOneInput|| gameState==PlayerTwoInput || gameState== PlayerOneTurn || gameState == PlayerTwoTurn)){
+        myFont.drawString(p1Score,20, 20);
+        myFont.drawString(p2Score,20, 40);
+ }
 }
 
 	
