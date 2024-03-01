@@ -110,10 +110,6 @@ class ofApp : public ofBaseApp{
         string p2Score;
 		bool multover = false;
 		int count = 1;
-
-
-
-		//font
 		ofTrueTypeFont font;
 		ofTrueTypeFont myFont;
 };

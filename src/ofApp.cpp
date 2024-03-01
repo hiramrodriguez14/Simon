@@ -37,8 +37,10 @@ void ofApp::setup(){
 	//Initial State
 	gameState = StartUp;
 
-	//load font
+	//Font for the game mode
 	font.load("fonts/extra_bold.ttf", 36);//<-The font path and thickness
+
+	//Font for instruction
 	myFont.load("fonts/bold.ttf",10);
 }
 //--------------------------------------------------------------
@@ -86,10 +88,13 @@ void ofApp::update(){
 			lightOff(GREEN);
 		}
 	}
-
+	//This will replay the sequence when entering replay mode
 	if (gameState == ReplayMode) {
 		replaySequence();
 	}
+
+	//This defines the variable for the highscores and keep them updated, note that a minus 1 
+	//is implemented because limits are 1 default
 	p1Score = "Player 1 Highscore: " + ofToString(p1limit - 1);
     p2Score = "Player 2 Highscore: " + ofToString(p2limit - 1);
 }
@@ -105,7 +110,7 @@ void ofApp::draw(){
 	BlueButton->render();
 	YellowButton->render();
 	GreenButton->render();
-	//ResetButton->render();
+	//This will render Multiplayer and Free mode buttons
 	if(!idle && gameState == StartUp){
 		CompButton->render();
 		MultiplayerButton->render();
@@ -113,7 +118,9 @@ void ofApp::draw(){
 
 	
 	//This whole if statement will take care of showing
-	//the sequence to the user before accepting any input
+	//the sequence to the user before accepting any input -> for any game mode <-
+
+	//Classic mode
 	if(gameState == PlayingSequence){
 		showingSequenceDuration++;
 		if(showingSequenceDuration == 120){
@@ -133,6 +140,7 @@ void ofApp::draw(){
 			gameState = PlayerInput;
 		}
 	}
+	//Multiplayer
 	if(gameState == PlayerOneTurn){
 		showingSequenceDuration++;
 		if(showingSequenceDuration == 120){
@@ -219,6 +227,7 @@ void ofApp::draw(){
 		greenDot.draw(ofGetWindowWidth()/2-500, ofGetWindowHeight()/2-370, 50, 50);
 	}
 
+	//Basically these control when and what messages will appear on screen
 	if(!idle && gameState==StartUp){
 		// font.drawString("MULTIPLAYER!",/*width*/2+915,/*height*/2+670);
 		myFont.drawString("FREEMODE!",/*width*/2+47,/*height*/2+670);
@@ -238,8 +247,6 @@ void ofApp::draw(){
         myFont.drawString("PLAYER 2 TURN TO PLAY THE SEQUENCE!",/*width*/2+47,/*height*/2 + 670);
         
     }
-
-	
 	if(!idle && (gameState==PlayingSequence || gameState==PlayerInput)){
 		font.drawString("Classic Mode", 2+350, 2 + 70);
 	}
@@ -252,7 +259,7 @@ void ofApp::draw(){
 	if(!idle && !gameState==StartUp){
 		myFont.drawString("PRESS BACKSPACE KEY TO GO TO MAIN MENU",2+720, 2 + 750);
 	}
-
+	//Highscores
 	if(!idle && (gameState==PlayerOneInput|| gameState==PlayerTwoInput || gameState== PlayerOneTurn || gameState == PlayerTwoTurn)){
         myFont.drawString(p1Score,20, 20);
         myFont.drawString(p2Score,20, 40);
@@ -262,8 +269,7 @@ void ofApp::draw(){
 	
 //--------------------------------------------------------------
 void ofApp::replaySequence() {
-  
-
+  //Sequence for Free Mode
     // Check if it's time to replay the next button press
     int currentTime = ofGetElapsedTimeMillis();
     if (replayIndex < recordedSequence.size() && currentTime - lastReplayTime >= 1000) {
@@ -284,8 +290,6 @@ void ofApp::replaySequence() {
     }
 
 }
-
-
 
 //--------------------------------------------------------------
 void ofApp::GameReset(){
@@ -331,6 +335,7 @@ void ofApp::generateSequence(){
 		int random = ofRandom(4);
 	
 	//Depending on the random number, we will add a button to the sequence
+	//Classic Mode
 		if(random == 0){
 			Sequence.push_back(RED);
 		}
@@ -347,7 +352,7 @@ void ofApp::generateSequence(){
 		//We will adjust the sequence limit to the new size of the Sequence list
 		sequenceLimit = Sequence.size();
 	}
-
+	//Multiplayer
 	if(p1turn || (gameState == PlayerOneInput)){
 		int random = ofRandom(4);
 
