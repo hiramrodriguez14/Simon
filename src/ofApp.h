@@ -107,6 +107,7 @@ class ofApp : public ofBaseApp{
         int lastReplayTime = 0;
 		bool firstrun = true;
 		int count = 1;
+		bool multover = false;
 
 
 
