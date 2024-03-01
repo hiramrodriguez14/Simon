@@ -460,11 +460,14 @@ void ofApp::keyPressed(int key){
 			GameReset();	
 			CompButton->playSound();
 		}
-		else if(p1turn){
+		else if(multover){
+			multover = false;
+			p1turn = true;
 			GameReset();
 		}
 	}
 	if((!idle) && key == OF_KEY_BACKSPACE){
+		multover = false;
 		recordedSequence.clear();
 		count = 1;
 		p1Sequence.clear();
@@ -647,6 +650,7 @@ void ofApp::mousePressed(int x, int y, int button){
 				p1Index++;
 			}
 			else{
+				multover = true;
 				gameState = GameOver;
 			}
 	}
@@ -682,6 +686,7 @@ void ofApp::mousePressed(int x, int y, int button){
 				p2Index++;
 			}
 			else{
+				multover = true;
 				gameState = GameOver;
 			}
 	}
