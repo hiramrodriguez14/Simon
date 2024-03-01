@@ -108,7 +108,9 @@ class ofApp : public ofBaseApp{
 		bool firstrun = true;
 		string p1Score;
         string p2Score;
+		//check if the game over screen is in multiplayer
 		bool multover = false;
+		//count to to skip the second sequence generation
 		int count = 1;
 		ofTrueTypeFont font;
 		ofTrueTypeFont myFont;
